@@ -7,6 +7,7 @@ v0.0.0 20110502 rsz Created.
 V1.0.0 20110522 rsz Extended to show eta with growing bar.
 v2.0.0 20110525 rsz Added time elapsed.
 v2.0.1 20111006 rsz Added default constructor value.
+v2.0.1 20250731 mmt Changed sprintf to snprintf to silence compilation warnings
 */
 
 /**
@@ -107,22 +108,26 @@ class ezETAProgressBar {
     std::string out;
 
     if (days) {
-      sprintf(tmp, "%dd ", days);
+      //sprintf(tmp, "%dd ", days);
+      snprintf(tmp, sizeof(tmp), "%dd ", days);
       out += tmp;
     }
 
     if (hours >= 1) {
-      sprintf(tmp, "%dh ", hours);
+      //sprintf(tmp, "%dh ", hours);
+      snprintf(tmp, sizeof(tmp), "%dd ", days);
       out += tmp;
     }
 
     if (mins >= 1) {
-      sprintf(tmp, "%dm ", mins);
+      //sprintf(tmp, "%dm ", mins);
+      snprintf(tmp, sizeof(tmp), "%dd ", days);
       out += tmp;
     }
 
     if (sec >= 1) {
-      sprintf(tmp, "%ds", (int)sec);
+      //sprintf(tmp, "%ds", (int)sec);
+      snprintf(tmp, sizeof(tmp), "%dd ", days);
       out += tmp;
     }
 
@@ -139,7 +144,8 @@ class ezETAProgressBar {
   void setPct(float Pct) {
     endTime = osQueryPerfomance();
     char pctstr[5];
-    sprintf(pctstr, "%3d%%", (int)(100 * Pct));
+    //sprintf(pctstr, "%3d%%", (int)(100 * Pct));
+    snprintf(pctstr, sizeof(pctstr), "%3d%%", (int)(100 * Pct));
     // Compute how many tics we can display.
     int nticsMax = (width - 27);
     int ntics = (int)(nticsMax * Pct);
