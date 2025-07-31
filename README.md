@@ -15,8 +15,12 @@ The file hdf5-1.14.6.tar.gz was downloaded from https://www.hdfgroup.org/downloa
 
 The file fftw-3.3.10.tar.gz was downloaded from https://www.fftw.org/download.html  
 
+The file eigen-3.4.0.tar.gz was downloaded from https://eigen.tuxfamily.org/
+
 The file gadgets/ezETAProgressBar.hpp was dowloaded from
 https://ezprogressbar.sourceforge.net and slightly adapted
+
+The file tclap-1.2.5.tar.gz was downloaded from https://tclap.sourceforge.net  
 
 Due to the large size of the Boost library, this repository includes a split
 version (8 parts) of the original tarball distributed by Boost. The script
