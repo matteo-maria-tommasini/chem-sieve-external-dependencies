@@ -99,41 +99,27 @@ class ezETAProgressBar {
    */
   std::string secondsToString(long long t) {
     int days = t / 86400;
-    long long sec = t - days * 86400;
-    int hours = sec / 3600;
-    sec -= hours * 3600;
-    int mins = sec / 60;
-    sec -= mins * 60;
-    char tmp[8];
-    std::string out;
+    t %= 86400;
+    int hours = t / 3600;
+    t %= 3600;
+    int mins = t / 60;
+    int secs = t % 60;
 
-    if (days) {
-      //sprintf(tmp, "%dd ", days);
-      snprintf(tmp, sizeof(tmp), "%dd ", days);
-      out += tmp;
-    }
+    std::ostringstream oss;
+    if (days > 0)  oss << days  << "d ";
+    if (hours > 0) oss << hours << "h ";
+    if (mins > 0)  oss << mins  << "m ";
+    if (secs > 0)  oss << secs  << "s";
 
-    if (hours >= 1) {
-      //sprintf(tmp, "%dh ", hours);
-      snprintf(tmp, sizeof(tmp), "%dd ", days);
-      out += tmp;
-    }
+    std::string result = oss.str();
+    if (result.empty())
+      return "0s";
 
-    if (mins >= 1) {
-      //sprintf(tmp, "%dm ", mins);
-      snprintf(tmp, sizeof(tmp), "%dd ", days);
-      out += tmp;
-    }
+    // Trim trailing space if present
+    if (result.back() == ' ')
+      result.pop_back();
 
-    if (sec >= 1) {
-      //sprintf(tmp, "%ds", (int)sec);
-      snprintf(tmp, sizeof(tmp), "%dd ", days);
-      out += tmp;
-    }
-
-    if (out.empty()) out = "0s";
-
-    return out;
+    return result;
   }
 
   /**
