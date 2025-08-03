@@ -106,18 +106,16 @@ class ezETAProgressBar {
     int secs = t % 60;
 
     std::ostringstream oss;
-    if (days > 0)  oss << days  << "d ";
+    if (days > 0) oss << days << "d ";
     if (hours > 0) oss << hours << "h ";
-    if (mins > 0)  oss << mins  << "m ";
-    if (secs > 0)  oss << secs  << "s";
+    if (mins > 0) oss << mins << "m ";
+    if (secs > 0) oss << secs << "s";
 
     std::string result = oss.str();
-    if (result.empty())
-      return "0s";
+    if (result.empty()) return "0s";
 
     // Trim trailing space if present
-    if (result.back() == ' ')
-      result.pop_back();
+    if (result.back() == ' ') result.pop_back();
 
     return result;
   }
@@ -130,7 +128,7 @@ class ezETAProgressBar {
   void setPct(float Pct) {
     endTime = osQueryPerfomance();
     char pctstr[5];
-    //sprintf(pctstr, "%3d%%", (int)(100 * Pct));
+    // sprintf(pctstr, "%3d%%", (int)(100 * Pct));
     snprintf(pctstr, sizeof(pctstr), "%3d%%", (int)(100 * Pct));
     // Compute how many tics we can display.
     int nticsMax = (width - 27);
