@@ -33,6 +33,7 @@ v2.0.1 20250731 mmt Changed sprintf to snprintf to silence compilation warnings
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 #ifdef WIN32
 #include <windows.h>
