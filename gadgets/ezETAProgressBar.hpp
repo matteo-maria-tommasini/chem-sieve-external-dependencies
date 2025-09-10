@@ -7,7 +7,6 @@ v0.0.0 20110502 rsz Created.
 V1.0.0 20110522 rsz Extended to show eta with growing bar.
 v2.0.0 20110525 rsz Added time elapsed.
 v2.0.1 20111006 rsz Added default constructor value.
-v2.0.1 20250731 mmt Changed sprintf to snprintf to silence compilation warnings
 */
 
 /**
@@ -33,7 +32,6 @@ v2.0.1 20250731 mmt Changed sprintf to snprintf to silence compilation warnings
 
 #include <iostream>
 #include <string>
-#include <sstream>
 
 #ifdef WIN32
 #include <windows.h>
@@ -100,25 +98,37 @@ class ezETAProgressBar {
    */
   std::string secondsToString(long long t) {
     int days = t / 86400;
-    t %= 86400;
-    int hours = t / 3600;
-    t %= 3600;
-    int mins = t / 60;
-    int secs = t % 60;
+    long long sec = t - days * 86400;
+    int hours = sec / 3600;
+    sec -= hours * 3600;
+    int mins = sec / 60;
+    sec -= mins * 60;
+    char tmp[8];
+    std::string out;
 
-    std::ostringstream oss;
-    if (days > 0) oss << days << "d ";
-    if (hours > 0) oss << hours << "h ";
-    if (mins > 0) oss << mins << "m ";
-    if (secs > 0) oss << secs << "s";
+    if (days) {
+      sprintf(tmp, "%dd ", days);
+      out += tmp;
+    }
 
-    std::string result = oss.str();
-    if (result.empty()) return "0s";
+    if (hours >= 1) {
+      sprintf(tmp, "%dh ", hours);
+      out += tmp;
+    }
 
-    // Trim trailing space if present
-    if (result.back() == ' ') result.pop_back();
+    if (mins >= 1) {
+      sprintf(tmp, "%dm ", mins);
+      out += tmp;
+    }
 
-    return result;
+    if (sec >= 1) {
+      sprintf(tmp, "%ds", (int)sec);
+      out += tmp;
+    }
+
+    if (out.empty()) out = "0s";
+
+    return out;
   }
 
   /**
@@ -129,8 +139,7 @@ class ezETAProgressBar {
   void setPct(float Pct) {
     endTime = osQueryPerfomance();
     char pctstr[5];
-    // sprintf(pctstr, "%3d%%", (int)(100 * Pct));
-    snprintf(pctstr, sizeof(pctstr), "%3d%%", (int)(100 * Pct));
+    sprintf(pctstr, "%3d%%", (int)(100 * Pct));
     // Compute how many tics we can display.
     int nticsMax = (width - 27);
     int ntics = (int)(nticsMax * Pct);
