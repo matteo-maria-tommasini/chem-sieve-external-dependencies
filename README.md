@@ -22,6 +22,8 @@ https://ezprogressbar.sourceforge.net and slightly adapted
 
 The file tclap-1.2.5.tar.gz was downloaded from https://tclap.sourceforge.net  
 
+The file netcdf-c-4.10.0.tar.gz was downloaded from https://github.com/unidata/netcdf-c 
+
 Due to the large size of the Boost library, this repository includes a split
 version (8 parts) of the original tarball distributed by Boost. The script
 create-boost-parts_1.88.0.sh is used to generate the split files.
